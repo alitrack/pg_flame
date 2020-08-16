@@ -16,6 +16,7 @@ pg_flame
 
 # Common name of flamegraph output
 flamegraph.html
-
+pg_flame.html
+static.zip
 # Distribution directory
 dist

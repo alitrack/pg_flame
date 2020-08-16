@@ -11,8 +11,8 @@ var templateHTML *template.Template = template.Must(template.New("html").Parse(`
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/spiermar/d3-flame-graph@2.0.3/dist/d3-flamegraph.css">
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/d3-flamegraph.css">
 
     <style>
       body {
@@ -64,8 +64,8 @@ var templateHTML *template.Template = template.Must(template.New("html").Parse(`
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="static/html5shiv.min.js"></script>
+      <script src="static/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>
@@ -83,7 +83,7 @@ var templateHTML *template.Template = template.Must(template.New("html").Parse(`
             </form>
           </div>
         </nav>
-        <a class="logo" href="https://github.com/mgartner/pg_flame">
+        <a class="logo" href="https://github.com/alitrack/pg_flame">
           <h3 class="text-muted">pg_flame</h3>
         </a>
       </div>
@@ -94,9 +94,9 @@ var templateHTML *template.Template = template.Must(template.New("html").Parse(`
       </div>
     </div>
 
-    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/spiermar/d3-flame-graph@2.1.3/dist/d3-flamegraph.min.js"></script>
+    <script src="static/d3.v4.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src=static/d3-tip.min.js></script>
+    <script type="text/javascript" src="static/d3-flamegraph.min.js"></script>
 
     <script type="text/javascript">
     var flameGraph = d3.flamegraph()

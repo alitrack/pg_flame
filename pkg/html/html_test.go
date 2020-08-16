@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"testing"
 
+	"github.com/alitrack/pg_flame/pkg/plan"
 	"github.com/stretchr/testify/assert"
-	"pg_flame/pkg/plan"
 )
 
 func TestNew(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"pg_flame/pkg/plan"
+	"github.com/alitrack/pg_flame/pkg/plan"
 )
 
 type Flame struct {

@@ -1,6 +1,13 @@
-# pg_flame [![Version](https://img.shields.io/badge/version-v1.1-blue.svg)](https://github.com/mgartner/pg_flame/releases) [![Build Status](https://travis-ci.com/mgartner/pg_flame.svg?branch=master)](https://travis-ci.com/mgartner/pg_flame)
+# pg_flame
 
 A flamegraph generator for Postgres `EXPLAIN ANALYZE` output.
+
+A almost rewrite version,
+
+* static.go is generated with [zipdata](https://github.com/alitrack/zipdata) from static directory.
+* Support offline.
+* Use [webview](https://github.com/webview/webview) to automatically open created html.
+* Support  DATABASE_URL enviroment variable.
 
 <a href="https://mgartner.github.io/pg_flame/flamegraph.html">
   <img width="700" src="https://user-images.githubusercontent.com/1128750/67738754-16f0c300-f9cd-11e9-8fc2-6acc6f288841.png">
@@ -12,57 +19,46 @@ Try the demo [here](https://mgartner.github.io/pg_flame/flamegraph.html).
 
 ## Installation
 
-### Homebrew
-
-You can install via Homebrew with the follow command:
-
-```
-$ brew install mgartner/tap/pg_flame
-```
-
-### Download pre-compiled binary
-
-Download one of the compiled binaries [in the releases
-tab](https://github.com/mgartner/pg_flame/releases). Once downloaded, move
-`pg_flame` into your `$PATH`.
-
-### Docker
-
-Alternatively, if you'd like to use Docker to build the program, you can.
-
-```
-$ docker pull mgartner/pg_flame
-```
-
 ### Build from source
 
 If you'd like to build a binary from the source code, run the following
 commands. Note that compiling requires Go version 1.13+.
 
 ```
-$ git clone https://github.com/mgartner/pg_flame.git
-$ cd pg_flame
-$ go build
+$ go get -u github.com/alitrack/pg_flame
 ```
 
-A `pg_flame` binary will be created that you can place in your `$PATH`.
+A `pg_flame` binary will be created that you can place in your `$GOPATH/bin`.
 
 ## Usage
 
-The `pg_flame` program reads a JSON query plan from standard input and writes
-the flamegraph HTML to standard ouput. Therefore you can pipe and direct input
-and output however you desire.
-
-### Example: One-step
-
 ```bash
-$ psql dbname -qAtc 'EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) SELECT id FROM users' \
-    | pg_flame \
-    > flamegraph.html \
-    && open flamegraph.html
+usage: pg_flame [<flags>]
+
+A flamegraph generator for Postgres EXPLAIN ANALYZE output.
+
+Flags:
+      --help                    Show context-sensitive help (also try --help-long and --help-man).
+  -U, --username="steven"       database user name
+  -h, --host="localhost"        database server host or socket directory
+  -p, --port=5432               database server port
+      --sslmode="disable"       database server sslmode
+      --password=PASSWORD       database server password
+      --dbname="postgres"       database name
+  -o, --output="pg_flame.html"  output html file
+  -c, --command=COMMAND         run only single command (SQL)
+  -f, --file=FILE               execute commands from file
+  -s, --show_browser            Launch browser if successful
+      --version                 Show application version.
 ```
 
-### Example: Multi-step with SQL file
+### Example: from sql command 
+
+```bash
+$ pg_flame -c  'EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) SELECT id FROM users'
+```
+
+### Example: from sql file
 
 Create a SQL file with the `EXPLAIN ANALYZE` query.
 
@@ -76,24 +72,7 @@ FROM users
 Then run the query and save the JSON to a file.
 
 ```bash
-$ psql dbname -qAtf query.sql > plan.json
-```
-
-Finally, generate the flamegraph HTML.
-
-```
-$ cat plan.json | pg_flame > flamegraph.html
-```
-
-### Example: Docker
-
-If you've followed the Docker installation steps above, you can pipe query plan
-JSON to a container and save the output HTML.
-
-```
-$ psql dbname -qAtc 'EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) SELECT id FROM users' \
-    | docker run -i pg_flame \
-    > flamegraph.html
+$ pg_flame -f query.sql
 ```
 
 ## Background
